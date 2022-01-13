@@ -17,7 +17,7 @@ function Categories() {
                 <ul className="categories-container__list">
                     {
                         categories.map(category => (
-                            <li key={category}>
+                            <li key={category.id}>
                                 <Link to={`/categories/${category.id}`}>{category.name}</Link>
                             </li>
                         ))

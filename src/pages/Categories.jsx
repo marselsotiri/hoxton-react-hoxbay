@@ -1,31 +1,25 @@
-import { useEffect, useState } from "react"
-import { Link } from "react-router-dom"
+import { useEffect, useState } from 'react'
+import CategoryCard from '../components/CategoryCard'
 
 function Categories() {
+  // fetch categories from server
+  const [categories, setCategories] = useState([])
 
-    const [categories, setCategories] = useState([])
-    
+  useEffect(() => {
+    fetch('http://localhost:3000/categories')
+      .then(resp => resp.json())
+      .then(categoriesFromServer => setCategories(categoriesFromServer))
+  }, [])
 
-    useEffect(() => {
-        fetch('http://localhost:3000/categories')
-            .then(resp => resp.json())
-            .then(categories => setCategories(categories))
-    }, [])
-    return (
-        <main>
-            <section className="categories-container main-wrapper">
-                <ul className="categories-container__list">
-                    {
-                        categories.map(category => (
-                            <li key={category.id}>
-                                <Link to={`/categories/${category.id}`}>{category.name}</Link>
-                            </li>
-                        ))
-                    }
-                </ul>
-            </section>
-        </main>
-
-    )
+  return (
+    <section className="categories-container main-wrapper">
+      <ul className="categories-container__list">
+        {categories.map(category => (
+          <CategoryCard key={category.id} category={category} />
+        ))}
+      </ul>
+    </section>
+  )
 }
+
 export default Categories

@@ -20,22 +20,39 @@ function Basket() {
       .then(baskerFromServer => setBasket(baskerFromServer))
   }, [])
 
-  function updateQuantity(item, newQuantity) {
+  function updateQuantity(item) {
+    fetch(`http://localhost:3000/basket/${item.id}`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(item)
+    }).then(resp => resp.json())
+}
+
+  function changeQuantity(item, newQuantity) {
     // make a copy of the data
     let basketCopy = JSON.parse(JSON.stringify(basket))
-
+    updateQuantity(item)
     if (newQuantity > 0) {
       // update the data
       const match = basketCopy.find(target => target.id === item.id)
       match.quantity = newQuantity
     } else {
       // remove it from basket
+      deleteProduct(item.id)
       basketCopy = basketCopy.filter(target => target.id !== item.id)
     }
 
     // update state
     setBasket(basketCopy)
   }
+
+  function deleteProduct(id) {
+    fetch(`http://localhost:3000/basket/${id}`, {
+        method: 'DELETE'
+    }).then(resp => resp.json())
+}
 
   return (
     <section className="basket-container">
@@ -54,7 +71,7 @@ function Basket() {
                   <select
                     defaultValue={basketItem.quantity}
                     onChange={e => {
-                      updateQuantity(basketItem, Number(e.target.value))
+                      changeQuantity(basketItem, Number(e.target.value))
                     }}
                   >
                     <option value="0">0</option>

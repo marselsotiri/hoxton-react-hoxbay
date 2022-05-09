@@ -1,7 +1,7 @@
 
 # Hoxbay
 
-This is an E-commerce App you add, delete, patch products to the chart
+This is an E-commerce App you add, delete, patch products to the chart.
 
 
 ## Run Locally

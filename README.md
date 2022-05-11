@@ -24,16 +24,17 @@ Install dependencies
   npm install
 ```
 
-Start the server
+Start JSON server
 
 ```bash
  json-server --watch db/db.json --port 3000
 ```
+Start the server
 
 ```bash
   npm start
 ```
-Start JSON server
+
 
 
 
